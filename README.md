@@ -29,7 +29,7 @@
 | shipping_fee_status_id | integer    | null: false                    |
 | prefecture_id          | integer    | null: false                    |
 | scheduled_delivery_id  | integer    | null: false                    |
-| prise                  | string     | null: false                    |
+| price                  | integer    | null: false                    |
 | user                   | references | null: false, foreign_key: true |
 
 ### Association
@@ -46,6 +46,7 @@
 
 ### Association
 
+- belongs_to :user
 - belongs_to :item
 - has_one :shipping_address
 
