@@ -10,27 +10,6 @@ RSpec.describe User, type: :model do
       it "nickname,email,password,password_confirmation,last_name,first_name,last_name_kana,first_name_kana,birth_dateが存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      it "passwordが６文字以上の半角英数混合で登録できる" do
-        @user.password = "111aaa"
-        @user.password_confirmation = "111aaa"
-        expect(@user).to be_valid
-      end
-      it "last_nameが全角平仮名、カタカナ、漢字であれば登録できる" do
-        @user.last_name = "田中"
-        expect(@user).to be_valid
-      end
-      it "first_nameが全角平仮名、カタカナ、漢字であれば登録できる" do
-        @user.first_name = "太郎"
-        expect(@user).to be_valid
-      end
-      it "last_name_kanaが全角カタカナであれば登録できる" do
-        @user.last_name_kana = "タナカ"
-        expect(@user).to be_valid
-      end
-      it "first_name_kanaが全角カタカナであれば登録できる" do
-        @user.first_name_kana = "タロウ"
-        expect(@user).to be_valid
-      end
     end
 
     context '新規登録ができない時' do
@@ -57,6 +36,11 @@ RSpec.describe User, type: :model do
         another_user.email = @user.email
         another_user.valid?
         expect(another_user.errors.full_messages).to include("Email has already been taken")
+      end
+      it "emailに@が含まれていない場合登録できない" do
+        @user.email = "testtest"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
       it "passwordが空だと登録できない" do
         @user.password = ''
