@@ -9,13 +9,14 @@ class Item < ApplicationRecord
     validates :image
     validates :item_name,              length: { maximum: 40 }
     validates :info,                   length: { maximum: 1000 }
-    validates :category_id,            numericality: { other_than: 0 }
-    validates :sales_status_id,        numericality: { other_than: 0 }
-    validates :shipping_fee_status_id, numericality: { other_than: 0 }
-    validates :prefecture_id,          numericality: { other_than: 0 }
-    validates :scheduled_delivery_id,  numericality: { other_than: 0 }
+      with_options numericality: { other_than: 0 } do
+        validates :category_id
+        validates :sales_status_id
+        validates :shipping_fee_status_id
+        validates :prefecture_id
+        validates :scheduled_delivery_id
+      end
     validates :price, format: { with: /\A[0-9]+\z/}, numericality: { greater_than_or_equal_to: 300, less_than: 9999999 }
     validates :user
   end
-  
 end
