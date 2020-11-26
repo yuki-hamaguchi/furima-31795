@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order("created_at DESC")
+    #前回の実装にてマージして差分が上がらなかった部分
   end
 
   def new
