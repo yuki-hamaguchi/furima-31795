@@ -4,10 +4,8 @@ class OrdersController < ApplicationController
 
   def index
     @order_address = OrderAddress.new
-    if @item.order .present?
-       current_user == @item.user
-       redirect_to root_path
-    end
+    illegal_entry_1
+    illegal_entry_2
   end
 
   def create
@@ -27,8 +25,12 @@ class OrdersController < ApplicationController
     params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
-  def illegal_entry
+  def illegal_entry_1
     redirect_to root_path unless current_user == @item.user
+  end
+
+  def illegal_entry_2
+    redirect_to root_path unless @item.order .present?
   end
 
   def set_item
